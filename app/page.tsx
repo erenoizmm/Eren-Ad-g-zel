@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { 
     FaVolumeUp, 
@@ -9,7 +11,7 @@ import {
 } from 'react-icons/fa';
 import { SiTensorflow, SiVuedotjs } from 'react-icons/si';
 
-const ErenPortfolio: React.FC = () => {
+export default function ErenPortfolio() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [snowflakes, setSnowflakes] = useState<JSX.Element[]>([]);
 
@@ -58,7 +60,7 @@ const ErenPortfolio: React.FC = () => {
     }, []);
 
     return (
-        <div className="bg-black text-white overflow-x-hidden font-poppins">
+        <div className="bg-black text-white overflow-x-hidden font-sans">
             {/* Kar Efekti Container */}
             <div id="snow-container" className="fixed inset-0 pointer-events-none z-10">
                 {snowflakes}
@@ -202,9 +204,54 @@ const ErenPortfolio: React.FC = () => {
                     </div>
                 </section>
             </main>
+
+            {/* Global Styles */}
+            <style jsx global>{`
+                @keyframes snowfall {
+                    0% {
+                        transform: translateY(-100vh);
+                        opacity: 0;
+                    }
+                    10% {
+                        opacity: 1;
+                    }
+                    90% {
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translateY(100vh);
+                        opacity: 0;
+                    }
+                }
+
+                .snowflake {
+                    position: fixed;
+                    color: white;
+                    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+                    animation: snowfall linear infinite;
+                    z-index: 1;
+                    pointer-events: none;
+                }
+
+                .glass-btn {
+                    background: rgba(255, 255, 255, 0.1);
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    transition: all 0.3s ease;
+                }
+
+                .nav-link {
+                    position: relative;
+                    transition: color 0.3s ease;
+                }
+
+                .nav-link:hover {
+                    color: #60a5fa;
+                }
+            `}</style>
         </div>
     );
-};
+}
 
 // Skill Bar Component
 interface SkillBarProps {
@@ -239,14 +286,14 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, technologies }) => (
-    <div className="project-card">
+    <div className="project-card bg-white/10 p-6 rounded-lg">
         <h3 className="text-2xl font-bold mb-4">{title}</h3>
         <p className="opacity-90 mb-4">{description}</p>
         <div className="flex gap-2 items-center">
             {technologies.map((tech, index) => (
                 <div 
                     key={index} 
-                    className="glass-btn text-sm flex items-center space-x-2"
+                    className="flex items-center space-x-2 bg-white/20 px-3 py-1 rounded-full"
                 >
                     {tech.icon}
                     <span>{tech.name}</span>
@@ -255,5 +302,3 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, technolog
         </div>
     </div>
 );
-
-export default ErenPortfolio;
